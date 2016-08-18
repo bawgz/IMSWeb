@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import com.revature.beans.Product;
+import com.revature.beans.ProductCategory;
+import com.revature.hibernate.BusinessDelegate;
 
 @Controller
 public class MainController implements ServletContextAware, InitializingBean{
@@ -24,16 +26,24 @@ public class MainController implements ServletContextAware, InitializingBean{
 	@Autowired
 	private ServletContext servletContext;
 	
+	@RequestMapping(value="plist.do", method=RequestMethod.GET)
+	public String plist(HttpServletRequest req, HttpServletResponse resp){
+		List<ProductCategory> categories = new BusinessDelegate().getProductCategories();
+		req.getSession().setAttribute("categories", categories);
+		return "plist";
+	}
+	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
-	public ModelAndView addProduct(
+	public String addProduct(
 			@ModelAttribute("product") @Valid Product product, 
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		if(bindingResult.hasErrors()){
-			return new ModelAndView("plist");
+			return "plist";
 		}
-		return new ModelAndView("index");
+		new BusinessDelegate().insert(product);
+		return "index";
 	}
 
 	@Override
