@@ -74,6 +74,11 @@
   	<artifactId>validation-api</artifactId>
   	<version>1.0.0.GA</version>
   </dependency>
+  <dependency>
+  	<groupId>com.revature</groupId>
+  	<artifactId>IMS</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </dependency>
   </dependencies>
   <build>
     <finalName>MVC</finalName>
