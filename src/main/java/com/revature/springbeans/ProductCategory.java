@@ -1,7 +1,9 @@
-package com.revature.beans;
+package com.revature.springbeans;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.revature.beans.Product;
 
 public class ProductCategory {
 

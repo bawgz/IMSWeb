@@ -1,4 +1,4 @@
-package com.revature.beans;
+package com.revature.springbeans;
 
 import java.sql.Blob;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.revature.beans.ProductCategory;
 
 public class Product {
 
