@@ -8,6 +8,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/IMSWeb/target/classes"/>
-        <property name="context-root" value="IMSWeb"/>
+        <property name="context-root" value="MVC"/>
     </wb-module>
 </project-modules>
