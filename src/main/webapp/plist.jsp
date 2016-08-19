@@ -26,7 +26,7 @@
 	Quantity in stock: <form:input path="quantityOnHand" /> <form:errors path="quantityOnHand" cssClass="error"/> <br />
 	Retail price: <form:input path="retailPrice" /> <form:errors path="retailPrice" cssClass="error"/> <br />
 	Weight: <form:input path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
-	Categories: <form:checkboxes items="${categories}" path="productCategories" />
+	Categories: <form:checkboxes items="${categories}" path="categoryNames" />
 	<input type="submit" value="Register" />
 </form:form>
 </body>

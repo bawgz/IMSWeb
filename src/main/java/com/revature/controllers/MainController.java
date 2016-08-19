@@ -1,6 +1,9 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +14,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.ProductCategory;
 import com.revature.hibernate.BusinessDelegate;
-import com.revature.springbeans.Product;
-import com.revature.springbeans.ProductCategory;
 
 @Controller
 public class MainController implements ServletContextAware, InitializingBean{
@@ -28,7 +31,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
-		req.setAttribute("product", new Product());
+		req.setAttribute("product", new com.revature.beans.Product());
 		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
 		return "plist";
@@ -36,13 +39,22 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
 	public String addProduct(
-			@ModelAttribute("product") @Valid Product product, 
+			@ModelAttribute("product") @Valid com.revature.beans.Product product, 
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		System.out.println("Button pressed");
 		if(bindingResult.hasErrors()){
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for(ObjectError e: errors){
+				System.out.println(e.getDefaultMessage());
+			}
+			System.out.println("GG nerd");
 			return "plist";
 		}
+		String[] catNames = product.getCategoryNames();
+		Set<ProductCategory> categories = new HashSet<>();
+		List<String> catNamesList = new ArrayList<String>();
 		new BusinessDelegate().insert(product);
 		return "index";
 	}
