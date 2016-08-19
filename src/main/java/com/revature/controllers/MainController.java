@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
-import com.revature.beans.Product;
-import com.revature.beans.ProductCategory;
 import com.revature.hibernate.BusinessDelegate;
+import com.revature.springbeans.Product;
+import com.revature.springbeans.ProductCategory;
 
 @Controller
 public class MainController implements ServletContextAware, InitializingBean{
@@ -28,7 +28,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
-		List<ProductCategory> categories = new BusinessDelegate().getProductCategories();
+		// hello there
+		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
 		return "plist";
 	}
