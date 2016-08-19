@@ -21,10 +21,10 @@
 	Short Name: <form:input path="shortName" /> <form:errors path="shortName" cssClass="error"/> <br />
 	Unit Cost: <form:input path="unitCost" /> <form:errors path="unitCost" cssClass="error"/> <br />
 	Pack Size: <form:input path="packSize" /> <form:errors path="packSize" cssClass="error"/> <br />
-	Reorder Quantity: <form:input path="shortName" /> <form:errors path="shortName" cssClass="error"/> <br />
+	Reorder Quantity: <form:input path="reorderQuantity" /> <form:errors path="reorderQuantity" cssClass="error"/> <br />
 	Reorder Threshold: <form:input path="reorderThreshold" /> <form:errors path="reorderThreshold" cssClass="error"/> <br />
 	Quantity in stock: <form:input path="quantityOnHand" /> <form:errors path="quantityOnHand" cssClass="error"/> <br />
-	Reatail price: <form:input path="retailPrice" /> <form:errors path="retailPrice" cssClass="error"/> <br />
+	Retail price: <form:input path="retailPrice" /> <form:errors path="retailPrice" cssClass="error"/> <br />
 	Weight: <form:input path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
 	Categories: <form:checkboxes items="${categories}" path="productCategories" />
 	<input type="submit" value="Register" />

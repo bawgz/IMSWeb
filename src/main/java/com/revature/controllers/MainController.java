@@ -28,7 +28,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
-		// hello there
+		req.setAttribute("product", new Product());
 		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
 		return "plist";
@@ -54,9 +54,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 	}
 
 	@Override
-	public void setServletContext(ServletContext arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setServletContext(ServletContext ctxt) {
+		this.servletContext = ctxt;
 	}
 	
 }
