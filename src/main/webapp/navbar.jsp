@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="index.jsp">Home<span class="sr-only">(current)</span></a></li>
         <li><a href="plist.do">Add Product</a></li>
-        <li><a href="clist.jsp"> Add Client</a></li>
+        <li><a href="clist.do"> Add Client</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->

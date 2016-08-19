@@ -38,6 +38,12 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "plist";
 	}
 	
+	@RequestMapping(value="clist.do", method=RequestMethod.GET)
+	public String clist(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("client", new com.revature.beans.Client());
+		return "clist";
+	}
+	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
 	public String addProduct(
 			@ModelAttribute("product") @Valid com.revature.beans.Product product, 
@@ -54,9 +60,10 @@ public class MainController implements ServletContextAware, InitializingBean{
 			return "plist";
 		}
 		String[] catNames = product.getCategoryNames();
+		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
+
 		Set<ProductCategory> categories = new HashSet<>();
 		List<ProductCategory> allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
-		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
 		for(ProductCategory cat: allCats){
 			if(catNamesList.contains(cat.getCategoryDescription())) {
 				categories.add(cat);
@@ -67,12 +74,31 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "index";
 	}
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub
-		
+	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
+	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println("entered add client???");
+		return "clist";
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {}
 	@Override
 	public void setServletContext(ServletContext ctxt) {
 		this.servletContext = ctxt;

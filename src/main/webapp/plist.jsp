@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -8,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cabbage Corp</title>
-<style type="text/css">
+<style>
 	.error{
 		color: red;
 	}
@@ -49,7 +48,7 @@
 	<label for="weight">Weight: </label> 
 	<form:input cssClass="form-control" id="weight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
 	<label for="cats">Categories: </label> 
-	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" /> <br />
+	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" /> <br>
 	<input type="submit" value="Add Product" />
 </div>
 </form:form>
