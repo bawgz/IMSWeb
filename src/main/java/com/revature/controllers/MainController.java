@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +55,14 @@ public class MainController implements ServletContextAware, InitializingBean{
 		}
 		String[] catNames = product.getCategoryNames();
 		Set<ProductCategory> categories = new HashSet<>();
-		List<String> catNamesList = new ArrayList<String>();
+		List<ProductCategory> allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
+		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
+		for(ProductCategory cat: allCats){
+			if(catNamesList.contains(cat.getCategoryDescription())) {
+				categories.add(cat);
+			}
+		}
+		product.setProductCategories(categories);
 		new BusinessDelegate().insert(product);
 		return "index";
 	}
