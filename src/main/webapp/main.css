@@ -1,6 +1,21 @@
 @CHARSET "ISO-8859-1";
 
-.bod{
-	margin-left: 13%;
-	margin-right: 13%;
+#navbar {
+	background: #669D3C;
+	padding-left:12%;
+	padding-right:12%;
+}
+.buttons{
+	background: #669D3C !important;
+	color: white !important; 
+}
+form button.buttons:hover, form button.buttons:active{
+	background: #404F24 !important;
+	color: white;
+}
+a.navlinks{
+	color: white !important;
+}
+a.navlinks:hover{
+	background: #404F24 !important;
 }

@@ -20,6 +20,8 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="main.css">
 </head>
 <body class="bod">
 <jsp:include page="navbar.jsp"></jsp:include>
