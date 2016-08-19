@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
 import com.revature.hibernate.BusinessDelegate;
 
@@ -32,7 +33,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
-		req.setAttribute("product", new com.revature.beans.Product());
+		req.setAttribute("product", new Product());
 		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
 		return "plist";
@@ -40,7 +41,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
 	public String addProduct(
-			@ModelAttribute("product") @Valid com.revature.beans.Product product, 
+			@ModelAttribute("product") @Valid Product product, 
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
@@ -50,12 +51,19 @@ public class MainController implements ServletContextAware, InitializingBean{
 			for(ObjectError e: errors){
 				System.out.println(e.getDefaultMessage());
 			}
-			System.out.println("GG nerd");
 			return "plist";
 		}
 		String[] catNames = product.getCategoryNames();
 		Set<ProductCategory> categories = new HashSet<>();
-		List<ProductCategory> allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
+		List<ProductCategory> allCats = new ArrayList<ProductCategory>();
+		allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
+
+		
+		if(allCats.isEmpty()){
+			System.out.println("Empty");
+		} else {
+			System.out.println(allCats.get(1));
+		}
 		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
 		for(ProductCategory cat: allCats){
 			if(catNamesList.contains(cat.getCategoryDescription())) {

@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Cabbage Corp</title>
+<link rel="stylesheet" href="main.css">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -11,10 +12,16 @@
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body class="bod">
+<body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<h2>Home Page</h2>
-<a href="plist.do">Update products</a>
-<a href="clist.jsp">Update clients</a>
+<div class="container">
+	<h2>Home Page</h2>
+	<form action="plist.do">
+		<button type="submit" class="btn btn-default buttons">Add Product</button>
+	</form>
+	<form action="clist.jsp">
+		<button type="submit" class="btn btn-default buttons">Add Client</button>
+	</form>
+</div>
 </body>
 </html>

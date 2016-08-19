@@ -21,6 +21,8 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="main.css">
 </head>
 <body class="bod">
 <jsp:include page="navbar.jsp"></jsp:include>
@@ -49,8 +51,8 @@
 	<label for="weight">Weight: </label> 
 	<form:input cssClass="form-control" id="weight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
 	<label for="cats">Categories: </label> 
-	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" /> <br />
-	<input type="submit" value="Add Product" />
+	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" />  <br />
+	<input type="submit" value="Add Product"/>
 </div>
 </form:form>
 </div>
