@@ -51,10 +51,14 @@
 	<label for="weight">Weight: </label> 
 	<form:input cssClass="form-control" id="weight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
 	<label for="cats">Categories: </label> 
-	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" />  <br />
-	<input type="submit" value="Add Product"/>
+	<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="cats" /> 
+		<form:errors path="categoryNames" cssClass="error"/>  <br />
+	<input type="submit" value="Add Product" class="btn btn-default buttons"/>
 </div>
 </form:form>
+<c:if test="${not empty success}">
+	<c:out value="${success}"></c:out>
+</c:if>
 </div>
 </body>
 </html>

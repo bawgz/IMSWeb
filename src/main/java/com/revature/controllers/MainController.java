@@ -46,6 +46,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		System.out.println("Button pressed");
+		req.setAttribute("success", null);
 		if(bindingResult.hasErrors()){
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			for(ObjectError e: errors){
@@ -57,13 +58,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		Set<ProductCategory> categories = new HashSet<>();
 		List<ProductCategory> allCats = new ArrayList<ProductCategory>();
 		allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
-
-		
-		if(allCats.isEmpty()){
-			System.out.println("Empty");
-		} else {
-			System.out.println(allCats.get(1));
-		}
 		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
 		for(ProductCategory cat: allCats){
 			if(catNamesList.contains(cat.getCategoryDescription())) {
@@ -72,7 +66,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 		}
 		product.setProductCategories(categories);
 		new BusinessDelegate().insert(product);
-		return "index";
+		req.setAttribute("success", "Product succesfully added.");
+		return "plist";
 	}
 
 	@Override

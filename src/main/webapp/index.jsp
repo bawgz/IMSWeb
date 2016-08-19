@@ -15,13 +15,10 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
-	<h2>Home Page</h2>
-	<form action="plist.do">
-		<button type="submit" class="btn btn-default buttons">Add Product</button>
-	</form>
-	<form action="clist.jsp">
-		<button type="submit" class="btn btn-default buttons">Add Client</button>
-	</form>
+	<div id="narrow">
+		<h3 class="header">Home</h3>
+	</div>
+	
 </div>
 </body>
 </html>
