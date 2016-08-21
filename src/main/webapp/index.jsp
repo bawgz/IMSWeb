@@ -22,6 +22,7 @@
 	<form action="clist.do">
 		<button type="submit" class="btn btn-default buttons">Add Client</button>
 	</form>
+	<h2>Product Summary</h2>
 </div>
 </body>
 </html>

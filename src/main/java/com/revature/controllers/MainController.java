@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.ClientType;
 import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
+import com.revature.beans.PurchaseOrder;
 import com.revature.hibernate.BusinessDelegate;
 
 @Controller
@@ -34,8 +36,10 @@ public class MainController implements ServletContextAware, InitializingBean{
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("product", new Product());
-		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
+		List<ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
+		List<Product> products = new BusinessDelegate().getProducts();
+		req.getSession().setAttribute("products", products);
 		return "plist";
 	}
 	
@@ -51,6 +55,14 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "clist";
 	}
 	
+	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
+	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("invoice", new PurchaseOrder());
+		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		return "invoice";
+	}
+	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
 	public String addProduct(
 			@ModelAttribute("product") @Valid Product product, 
@@ -58,11 +70,14 @@ public class MainController implements ServletContextAware, InitializingBean{
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		System.out.println("Button pressed");
+		req.setAttribute("success", null);
 		if(bindingResult.hasErrors()){
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			for(ObjectError e: errors){
 				System.out.println(e.getDefaultMessage());
 			}
+			List<Product> products = new BusinessDelegate().getProducts();
+			req.getSession().setAttribute("products", products);
 			return "plist";
 		}
 		String[] catNames = product.getCategoryNames();
@@ -78,7 +93,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 		}
 		product.setProductCategories(categories);
 		new BusinessDelegate().insert(product);
-		return "index";
+		req.setAttribute("success", "Product succesfully added.");
+		return "plist";
 	}
 
 	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
@@ -88,8 +104,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		new BusinessDelegate().insert(client);
 		return "clist";
 	}
-	
-	
 	
 	
 	

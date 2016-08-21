@@ -1,21 +1,39 @@
 @CHARSET "ISO-8859-1";
 
 #navbar {
-	background: #669D3C;
+	background: #3D542A;
 	padding-left:12%;
 	padding-right:12%;
 }
 .buttons{
-	background: #669D3C !important;
-	color: white !important; 
+	background: #3D542A !important;
+	color: #F0E14A !important; 
 }
 form button.buttons:hover, form button.buttons:active{
 	background: #404F24 !important;
-	color: white;
+	color: #F0E14A;
 }
 a.navlinks{
-	color: white !important;
+	color: #F0E14A !important;
 }
 a.navlinks:hover{
 	background: #404F24 !important;
+}
+
+#logo{
+	width:20%;
+}
+
+#narrow {
+	margin-left: 12%;
+	margin-right: 12%;
+}
+.header{
+	padding-left: 20px;
+	color: #3D542A;
+	border-bottom: thin, solid, #3D542A;
+}
+
+#cats{
+	padding: 20px;
 }

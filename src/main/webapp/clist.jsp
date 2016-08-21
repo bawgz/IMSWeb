@@ -49,7 +49,7 @@ Client Type:
 
 
 
-<input type="submit" value="Add Client" />
+<input class="btn btn-default buttons" type="submit" value="Add Client" />
 </div>
 </form:form>
 </div>
