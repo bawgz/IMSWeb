@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.ClientType;
 import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
+import com.revature.beans.PurchaseOrder;
 import com.revature.hibernate.BusinessDelegate;
 
 @Controller
@@ -45,6 +47,14 @@ public class MainController implements ServletContextAware, InitializingBean{
 	public String clist(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("client", new com.revature.beans.Client());
 		return "clist";
+	}
+	
+	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
+	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("invoice", new PurchaseOrder());
+		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		return "invoice";
 	}
 	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
@@ -86,8 +96,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		System.out.println("entered add client???");
 		return "clist";
 	}
-	
-	
 	
 	
 	

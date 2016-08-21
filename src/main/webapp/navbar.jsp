@@ -10,6 +10,7 @@
         <li><a class="navlinks" href="index.jsp">Home</a></li>
         <li><a class="navlinks" href="plist.do">Add Product</a></li>
         <li><a class="navlinks" href="clist.do"> Add Client</a></li>
+        <li><a class="navlinks" href="invoice.do">Generate Invoice</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
