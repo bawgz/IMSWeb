@@ -15,25 +15,39 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="main.css">
 </head>
 <body class="bod">
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
 <h2>Add a New Client</h2>
-<form:form action="addclient.do" method="post" commandName="client"> <!-- commandname supplies empty object for form to fill (in addclient.do) -->
+<form:form action="addclient.do" method="post" modelAttribute="client"> <!-- modelAttribute = name of bean in the session scope that are sending form data to -->
 <div class="form-group">
-<label for="companyName">Company Name: </label>
-<form:input cssClass="form-control" id="companyName" path="clientName"/><form:errors path="clientName" cssClass="error"/><br>
-<label for="contactName">Contact Name: </label>
-<form:input cssClass="form-control" id="contactName" path="pointOfContactName"/><form:errors path="pointOfContactName" cssClass="error"/><br>
-<label for="email">Email: </label>
-<form:input cssClass="form-control" id="email" path="clientEmail"/><form:errors path="clientEmail" cssClass="error"/><br>
-<label for="phone">Phone: </label>
-<form:input cssClass="form-control" id="phone" path="clientPhone"/><form:errors path="clientPhone" cssClass="error"/><br>
-<label for="fax">Fax: </label>
-<form:input cssClass="form-control" id="fax" path="clientFax"/><form:errors path="clientFax" cssClass="error"/><br>
-<label for="address">Address: </label>
-<form:input cssClass="form-control" id="address" path="address"/><form:errors path="address" cssClass="error"/><br>
+Street Address 1:
+<form:input path="address.streetAddress1" cssClass="form-control" />
+Street Address 2: 
+<form:input path="address.streetAddress2" cssClass="form-control" />
+Address City:
+<form:input path="address.addressCity" cssClass="form-control" />
+State:
+<form:select path="address.stateAbbrv.abbrvId" items="${states}" itemValue="abbrvId" itemLabel="stateName" />
+Zip:
+<form:input path="address.addressZip" cssClass="form-control" />
+
+Client name:
+<form:input path="clientName" cssClass="form-control" />
+Client email:
+<form:input path="clientEmail" cssClass="form-control" />
+Point of contact name:
+<form:input path="pointOfContactName" cssClass="form-control" />
+Client Phone:
+<form:input path="clientPhone" cssClass="form-control" />
+Client Fax:
+<form:input path="clientFax" cssClass="form-control" />
+Client Type:
+<form:select path="clientType.clientTypeId" items="${clientTypes}" itemValue="clientTypeId" itemLabel="clientType" />
+
+
 
 <input type="submit" value="Add Client" />
 </div>

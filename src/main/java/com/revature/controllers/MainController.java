@@ -42,6 +42,12 @@ public class MainController implements ServletContextAware, InitializingBean{
 	@RequestMapping(value="clist.do", method=RequestMethod.GET)
 	public String clist(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("client", new com.revature.beans.Client());
+		List<com.revature.beans.StateAbbrv> states = new BusinessDelegate().getStateAbbrvs();
+		req.getSession().setAttribute("states", states);
+		List<com.revature.beans.ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		req.getSession().setAttribute("clientTypes", clientTypes);
+		
+		req.setAttribute("address", new com.revature.beans.Address());
 		return "clist";
 	}
 	
@@ -76,8 +82,10 @@ public class MainController implements ServletContextAware, InitializingBean{
 	}
 
 	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
-	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println("entered add client???");
+	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client,
+			BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
+		new BusinessDelegate().insert(client.getAddress());
+		new BusinessDelegate().insert(client);
 		return "clist";
 	}
 	
