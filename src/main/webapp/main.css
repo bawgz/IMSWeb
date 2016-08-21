@@ -33,3 +33,7 @@ a.navlinks:hover{
 	color: #3D542A;
 	border-bottom: thin, solid, #3D542A;
 }
+
+#cats{
+	padding: 20px;
+}

@@ -15,9 +15,7 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
-	<div id="narrow">
-		<h3 class="header">Home</h3>
-	</div>
+	<h2>Product Summary</h2>
 	
 </div>
 </body>

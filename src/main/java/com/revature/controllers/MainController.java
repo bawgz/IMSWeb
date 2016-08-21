@@ -34,9 +34,17 @@ public class MainController implements ServletContextAware, InitializingBean{
 	@RequestMapping(value="plist.do", method=RequestMethod.GET)
 	public String plist(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("product", new Product());
-		List<com.revature.beans.ProductCategory> categories = new BusinessDelegate().getProductCategories();
+		List<ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
+		List<Product> products = new BusinessDelegate().getProducts();
+		req.getSession().setAttribute("products", products);
 		return "plist";
+	}
+	
+	@RequestMapping(value="clist.do", method=RequestMethod.GET)
+	public String clist(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("client", new com.revature.beans.Client());
+		return "clist";
 	}
 	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
@@ -52,9 +60,12 @@ public class MainController implements ServletContextAware, InitializingBean{
 			for(ObjectError e: errors){
 				System.out.println(e.getDefaultMessage());
 			}
+			List<Product> products = new BusinessDelegate().getProducts();
+			req.getSession().setAttribute("products", products);
 			return "plist";
 		}
 		String[] catNames = product.getCategoryNames();
+
 		Set<ProductCategory> categories = new HashSet<>();
 		List<ProductCategory> allCats = new ArrayList<ProductCategory>();
 		allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
@@ -70,12 +81,31 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "plist";
 	}
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub
-		
+	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
+	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client, BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println("entered add client???");
+		return "clist";
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {}
 	@Override
 	public void setServletContext(ServletContext ctxt) {
 		this.servletContext = ctxt;
