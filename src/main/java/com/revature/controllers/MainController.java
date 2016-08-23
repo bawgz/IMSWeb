@@ -63,6 +63,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		BusinessDelegate bd = new BusinessDelegate();
 		System.out.println("Button pressed");
 		req.setAttribute("success", null);
 		if(bindingResult.hasErrors()){
@@ -86,8 +88,10 @@ public class MainController implements ServletContextAware, InitializingBean{
 			}
 		}
 		product.setProductCategories(categories);
-		new BusinessDelegate().insert(product);
+		bd.insert(product);
 		req.setAttribute("success", "Product succesfully added.");
+		List<Product> products = bd.getProducts();
+		req.getSession().setAttribute("products", products);
 		return "plist";
 	}
 
