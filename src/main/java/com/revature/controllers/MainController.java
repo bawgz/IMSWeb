@@ -100,6 +100,45 @@ public class MainController implements ServletContextAware, InitializingBean{
 		req.getSession().setAttribute("products", products);
 		return "plist";
 	}
+	
+	@RequestMapping(value="updateproduct.do", method=RequestMethod.POST)
+	public String updateProduct(
+			@ModelAttribute("product") @Valid Product product, 
+			BindingResult bindingResult,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		
+		BusinessDelegate bd = new BusinessDelegate();
+		System.out.println("Button pressed");
+		req.setAttribute("success", null);
+		if(bindingResult.hasErrors()){
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for(ObjectError e: errors){
+				System.out.println(e.getDefaultMessage());
+			}
+			List<Product> products = bd.getProducts();
+			req.getSession().setAttribute("products", products);
+			req.setAttribute("success", "Product not updated. Errors in input.");
+			return "plist";
+		}
+		String[] catNames = product.getCategoryNames();
+
+		Set<ProductCategory> categories = new HashSet<>();
+		List<ProductCategory> allCats = new ArrayList<ProductCategory>();
+		allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
+		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
+		for(ProductCategory cat: allCats){
+			if(catNamesList.contains(cat.getCategoryDescription())) {
+				categories.add(cat);
+			}
+		}
+		product.setProductCategories(categories);
+		bd.update(product);
+		req.setAttribute("success", "Product succesfully updated.");
+		List<Product> products = bd.getProducts();
+		req.getSession().setAttribute("products", products);
+		return "plist";
+	}
 
 	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
 	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client,

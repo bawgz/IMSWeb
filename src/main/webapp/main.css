@@ -37,3 +37,9 @@ a.navlinks:hover{
 #cats{
 	padding: 20px;
 }
+
+@media (min-width: 400px) { 
+	body .modal-lrg{ 
+		width: 80%; /* respsonsive width */ margin-left:-40%; /* width/2) */ 
+	} 
+}
