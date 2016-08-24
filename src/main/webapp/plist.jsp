@@ -41,9 +41,9 @@
         		<th>Name</th>
         		<th>Unit Cost</th>
         		<th>Retail Price</th>
-        		<th>Reorder Amt</th>
-        		<th>Threshold</th>
         		<th>Amt In Stock</th>
+        		<th>Threshold</th>
+        		<th>Reorder Amt</th>
         		<th></th>
         		<th hidden></th>
         		<th hidden></th>

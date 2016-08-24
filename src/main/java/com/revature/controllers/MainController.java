@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.Client;
 import com.revature.beans.ClientType;
 import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
@@ -45,12 +46,12 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="clist.do", method=RequestMethod.GET)
 	public String clist(HttpServletRequest req, HttpServletResponse resp) {
+		BusinessDelegate bd = new BusinessDelegate();
 		req.setAttribute("client", new com.revature.beans.Client());
-		List<com.revature.beans.StateAbbrv> states = new BusinessDelegate().getStateAbbrvs();
+		List<com.revature.beans.StateAbbrv> states = bd.getStateAbbrvs();
 		req.getSession().setAttribute("states", states);
-		List<com.revature.beans.ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		List<com.revature.beans.ClientType> clientTypes = bd.getClientTypes();
 		req.getSession().setAttribute("clientTypes", clientTypes);
-		
 		req.setAttribute("address", new com.revature.beans.Address());
 		return "clist";
 	}

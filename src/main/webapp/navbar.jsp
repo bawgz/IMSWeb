@@ -8,9 +8,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a class="navlinks" href="index.jsp">Home</a></li>
-        <li><a class="navlinks" href="plist.do">Add Product</a></li>
-        <li><a class="navlinks" href="clist.do"> Add Client</a></li>
-        <li><a class="navlinks" href="invoice.do">Generate Invoice</a></li>
+        <li><a class="navlinks" href="plist.do">Products</a></li>
+        <li><a class="navlinks" href="clist.do"> Clients</a></li>
+        <li><a class="navlinks" href="invoice.do">Invoices</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

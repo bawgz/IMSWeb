@@ -20,6 +20,53 @@
 <body class="bod">
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
+<h2>Products</h2>
+<table class="table" id="jqueryTable">
+  	<thead>
+      	<tr class="rowHeader">
+      		<th>UPC</th>
+      		<th>Name</th>
+      		<th>Unit Cost</th>
+      		<th>Retail Price</th>
+      		<th>Amt In Stock</th>
+      		<th>Threshold</th>
+      		<th>Reorder Amt</th>
+      		<th></th>
+      		<th hidden></th>
+      		<th hidden></th>
+      		<th hidden></th>
+      		<th hidden></th>
+      		<th hidden></th>
+      		<th hidden></th>        		
+    		</tr>
+  	</thead>
+  	<tbody>
+  		<c:forEach var="p" items="${products}">
+  			<tr>
+  				<td id="upc${p.productUpc}"><c:out value="${p.productUpc}"></c:out></td>       			
+      			<td id="name${p.productUpc}"><c:out value="${p.productName}"></c:out></td>
+      			<td><fmt:formatNumber value="${p.unitCost}" type="currency" /></td>
+      			<td><fmt:formatNumber value="${p.retailPrice}" type="currency" /></td>
+      			<td id="squantity${p.productUpc}"><c:out value="${p.quantityOnHand}"></c:out></td>
+      			<td id="threshold${p.productUpc}"><c:out value="${p.reorderThreshold}"></c:out></td>
+      			<td id="rquantity${p.productUpc}"><c:out value="${p.reorderQuantity}"></c:out></td>
+      			<td>
+      				<span data-toggle="modal" data-target="#updatemodal" id="${p.productUpc}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+      				<span id="${p.productUpc}" onclick=remove(this.id) style="cursor: pointer;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      			</td>
+      			<td id="desc${p.productUpc}" hidden><c:out value="${p.productDescription}"></c:out></td>
+      			<td id="short${p.productUpc}" hidden><c:out value="${p.shortName}"></c:out></td>
+      			<td id="pack${p.productUpc}" hidden><c:out value="${p.packSize}"></c:out></td>
+      			<td id="weight${p.productUpc}" hidden><c:out value="${p.productWeight}"></c:out></td>
+      			<td id="ucost${p.productUpc}" hidden><c:out value="${p.unitCost}"></c:out></td>
+      			<td id="rprice${p.productUpc}" hidden><c:out value="${p.retailPrice}"></c:out></td>
+      		</tr>
+  		</c:forEach>
+  	</tbody>
+</table>
+
+
+
 <h2>Add a New Client</h2>
 <form:form action="addclient.do" method="post" modelAttribute="client"> <!-- modelAttribute = name of bean in the session scope that are sending form data to -->
 <div class="form-group">

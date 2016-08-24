@@ -38,8 +38,7 @@ a.navlinks:hover{
 	padding: 20px;
 }
 
-@media (min-width: 400px) { 
-	body .modal-lrg{ 
-		width: 80%; /* respsonsive width */ margin-left:-40%; /* width/2) */ 
-	} 
+th {
+	background: #3D542A !important;
+	color: #F0E14A !important; 
 }
