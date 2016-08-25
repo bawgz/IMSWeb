@@ -156,7 +156,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "clist";
 	}
 	
-	
 	@Override
 	public void afterPropertiesSet() throws Exception {}
 	@Override

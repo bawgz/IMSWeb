@@ -76,7 +76,7 @@
     	</tbody>
     </table>
     
-    <button type="button" class="btn btn-default buttons" data-toggle="modal" data-target="#addmodal" onclick=clear()>+ New Product</button>
+    <button type="button" class="btn btn-default buttons" data-toggle="modal" data-target="#addmodal">+ New Product</button>
     <!-- New product -->
     
     <div id="addmodal" class="modal fade">
@@ -240,7 +240,7 @@
 $(document).ready(function() {
     $('#jqueryTable').DataTable();
 	$("#jqueryTable_info").hide();
-} );
+});
 
 function edit(upc){
 	$("#updateprodName").val($("#name" + upc).html());
@@ -267,17 +267,5 @@ function remove(upc){
 	$("#"+ upc).remove();
 }
 
-function clear(){
-	$("#prodName").val("");
-	$("#short").val("");
-	$("#weight").val("");
-	$("#ucost").val("");
-	$("#rprice").val("");
-	$("#pack").val("");
-	$("#stock").val("");
-	$("#quantity").val("");
-	$("#desc").val("");
-	$("#upc").val("");
-}
 </script>
 </html>

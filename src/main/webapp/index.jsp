@@ -14,8 +14,5 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container">
-
-</div>
 </body>
 </html>
