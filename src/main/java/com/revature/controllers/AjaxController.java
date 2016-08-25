@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.beans.Client;
+import com.revature.beans.Product;
 import com.revature.hibernate.BusinessDelegate;
 
 @Controller
@@ -27,5 +28,11 @@ public class AjaxController {
 	public List<Client> getRetailers(){
 		List<Client> clients = new BusinessDelegate().getClientById(22);
 		return clients;
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="deleteproduct.do")
+	public void deleteProduct(int upc){
+		BusinessDelegate bd = new BusinessDelegate();
+		bd.deleteProductByUpc(upc);
 	}
 }

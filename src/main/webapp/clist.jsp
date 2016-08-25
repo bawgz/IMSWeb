@@ -20,19 +20,19 @@
 <body class="bod">
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
-<h2>Products</h2>
+<h2>Clients</h2>
 <table class="table" id="jqueryTable">
   	<thead>
       	<tr class="rowHeader">
-      		<th>UPC</th>
+      		<th>ID</th>
       		<th>Name</th>
-      		<th>Unit Cost</th>
-      		<th>Retail Price</th>
-      		<th>Amt In Stock</th>
-      		<th>Threshold</th>
-      		<th>Reorder Amt</th>
+      		<th>Type</th>
+      		<th>Contact</th>
+      		<th>Email</th>
+      		<th>Phone</th>
+      		<th>Fax</th>
+      		<th>Location</th>
       		<th></th>
-      		<th hidden></th>
       		<th hidden></th>
       		<th hidden></th>
       		<th hidden></th>
@@ -41,25 +41,25 @@
     		</tr>
   	</thead>
   	<tbody>
-  		<c:forEach var="p" items="${products}">
+  		<c:forEach var="c" items="${clients}">
   			<tr>
-  				<td id="upc${p.productUpc}"><c:out value="${p.productUpc}"></c:out></td>       			
-      			<td id="name${p.productUpc}"><c:out value="${p.productName}"></c:out></td>
-      			<td><fmt:formatNumber value="${p.unitCost}" type="currency" /></td>
-      			<td><fmt:formatNumber value="${p.retailPrice}" type="currency" /></td>
-      			<td id="squantity${p.productUpc}"><c:out value="${p.quantityOnHand}"></c:out></td>
-      			<td id="threshold${p.productUpc}"><c:out value="${p.reorderThreshold}"></c:out></td>
-      			<td id="rquantity${p.productUpc}"><c:out value="${p.reorderQuantity}"></c:out></td>
+  				<td id="id${c.imsClientId}"><c:out value="${c.imsClientId}"></c:out></td>       			
+      			<td id="name${c.imsClientId}"><c:out value="${c.clientName}"></c:out></td>
+      			<td id="type${c.imsClientId}"><c:out value="${c.clientType}"></c:out></td>
+      			<td id="contact${c.imsClientId}"><c:out value="${c.pointOfContactName}"></c:out></td>
+      			<td id="email${c.imsClientId}"><c:out value="${c.clientEmail}"></c:out></td>
+      			<td id="phone${c.imsClientId}"><c:out value="${c.clientPhone}"></c:out></td>
+      			<td id="fax${c.imsClientId}"><c:out value="${c.clientFax}"></c:out></td>
+      			<td id="address${c.imsClientId}"><c:out value="${c.address}"></c:out></td>
       			<td>
-      				<span data-toggle="modal" data-target="#updatemodal" id="${p.productUpc}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-      				<span id="${p.productUpc}" onclick=remove(this.id) style="cursor: pointer;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      				<span data-toggle="modal" data-target="#updatemodal" id="${c.imsClientId}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+      				<span id="${c.imsClientId}" onclick=remove(this.id) style="cursor: pointer;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
       			</td>
-      			<td id="desc${p.productUpc}" hidden><c:out value="${p.productDescription}"></c:out></td>
-      			<td id="short${p.productUpc}" hidden><c:out value="${p.shortName}"></c:out></td>
-      			<td id="pack${p.productUpc}" hidden><c:out value="${p.packSize}"></c:out></td>
-      			<td id="weight${p.productUpc}" hidden><c:out value="${p.productWeight}"></c:out></td>
-      			<td id="ucost${p.productUpc}" hidden><c:out value="${p.unitCost}"></c:out></td>
-      			<td id="rprice${p.productUpc}" hidden><c:out value="${p.retailPrice}"></c:out></td>
+      			<td id="saddress1${c.imsClientId}" hidden><c:out value="${c.address.streetAddress1}"></c:out></td>
+      			<td id="saddress2${c.imsClientId}" hidden><c:out value="${c.address.streetAddress2}"></c:out></td>
+      			<td id="city${c.imsClientId}" hidden><c:out value="${c.address.addressCity}"></c:out></td>
+      			<td id="state${c.imsClientId}" hidden><c:out value="${c.address.stateAbbrv}"></c:out></td>
+      			<td id="zip${c.imsClientId}" hidden><c:out value="${c.address.addressZip}"></c:out></td>
       		</tr>
   		</c:forEach>
   	</tbody>
@@ -67,38 +67,94 @@
 
 
 
-<h2>Add a New Client</h2>
-<form:form action="addclient.do" method="post" modelAttribute="client"> <!-- modelAttribute = name of bean in the session scope that are sending form data to -->
-<div class="form-group">
-Street Address 1:
-<form:input path="address.streetAddress1" cssClass="form-control" />
-Street Address 2: 
-<form:input path="address.streetAddress2" cssClass="form-control" />
-Address City:
-<form:input path="address.addressCity" cssClass="form-control" />
-State:
-<form:select path="address.stateAbbrv.abbrvId" items="${states}" itemValue="abbrvId" itemLabel="stateName" />
-Zip:
-<form:input path="address.addressZip" cssClass="form-control" />
 
-Client name:
-<form:input path="clientName" cssClass="form-control" />
-Client email:
-<form:input path="clientEmail" cssClass="form-control" />
-Point of contact name:
-<form:input path="pointOfContactName" cssClass="form-control" />
-Client Phone:
-<form:input path="clientPhone" cssClass="form-control" />
-Client Fax:
-<form:input path="clientFax" cssClass="form-control" />
-Client Type:
-<form:select path="clientType.clientTypeId" items="${clientTypes}" itemValue="clientTypeId" itemLabel="clientType" />
+    <button type="button" class="btn btn-default buttons" data-toggle="modal" data-target="#addclientmodal">+ New Client</button>
+    <!-- New product -->
+    
+    <div id="addclientmodal" class="modal fade">
+	 	<div class="modal-dialog">
+	   		<div class="modal-content">
+	     		<div class="modal-header">
+	       			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	       			<h4 class="modal-title">Add Client</h4>
+	    		</div>
+	    		<form:form action="addclient.do" method="post" modelAttribute="client">
+		    		<div class="modal-body">
+						<div class="row">
+							<div class="form-group col-xs-9">
+								<label for="clientName">Client: </label>
+								<form:input path="clientName" id="clientName" cssClass="form-control" /> <form:errors path="clientName" cssClass="error"/> <br /> <!-- path = bean property -->
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="clientType">Type:</label>
+								<form:select path="clientType.clientTypeId" items="${clientTypes}" itemValue="clientTypeId" itemLabel="clientType" id="clientType" cssClass="form-control"/> <form:errors path="clientType.clientTypeId" cssClass="error"/> <br /> <!-- path = bean property -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="contact">Point of Contact:</label> 
+								<form:input path="pointOfContactName" id="contact" cssClass="form-control" /> <form:errors path="pointOfContactName" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="email">Email:</label> 
+								<form:input path="clientEmail" id="email" cssClass="form-control" /> <form:errors path="clientEmail" cssClass="error"/> <br />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="phone">Phone:</label> 
+								<form:input path="clientPhone" id="phone" cssClass="form-control" /> <form:errors path="clientPhone" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="fax">Fax:</label> 
+								<form:input path="clientFax" id="fax" cssClass="form-control" /> <form:errors path="clientFax" cssClass="error"/> <br />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-xs-12">
+								<label for="street1">Street Address 1:</label> 
+								<form:input path="address.streetAddress1" id="street1" cssClass="form-control" /> <form:errors path="address.streetAddress1" cssClass="error"/> <br />
+							</div>
+						</div>
+		
+						<div class="row">
+							<div class="form-group col-xs-12">
+								<label for="street1">Street Address 2:</label> 
+								<form:input path="address.streetAddress2" id="street2" cssClass="form-control" /> <form:errors path="address.streetAddress2" cssClass="error"/> <br />
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="city">City:</label> 
+								<form:input path="address.addressCity" id="city" cssClass="form-control" /> <form:errors path="address.addressCity" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="state">State:</label> 
+								<form:select path="address.stateAbbrv.abbrvId" items="${states}" itemValue="abbrvId" itemLabel="stateName" id="state" cssClass="form-control"/> <form:errors path="address.stateAbbrv.abbrvId" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="zip">Zip:</label> 
+								<form:input path="address.addressZip" id="zip" cssClass="form-control" /> <form:errors path="address.addressZip" cssClass="error"/> <br />
+							</div>
+						</div>
+		     		</div>
+		     		<div class="modal-footer">
+		       			<input class="btn btn-default buttons" type="submit" value="Add Client" />
+					</div>
+				</form:form>
+		     </div>
+	   	</div>
+	</div>
 
 
-
-<input class="btn btn-default buttons" type="submit" value="Add Client" />
-</div>
-</form:form>
 </div>
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#jqueryTable').DataTable();
+	$("#jqueryTable_info").hide();
+} );
+</script>
 </html>
