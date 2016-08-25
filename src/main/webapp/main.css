@@ -37,3 +37,8 @@ a.navlinks:hover{
 #cats{
 	padding: 20px;
 }
+
+th {
+	background: #3D542A !important;
+	color: #F0E14A !important; 
+}

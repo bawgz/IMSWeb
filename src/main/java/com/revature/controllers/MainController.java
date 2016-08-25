@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.Client;
 import com.revature.beans.ClientType;
 import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
@@ -45,14 +46,22 @@ public class MainController implements ServletContextAware, InitializingBean{
 	
 	@RequestMapping(value="clist.do", method=RequestMethod.GET)
 	public String clist(HttpServletRequest req, HttpServletResponse resp) {
+		BusinessDelegate bd = new BusinessDelegate();
 		req.setAttribute("client", new com.revature.beans.Client());
-		List<com.revature.beans.StateAbbrv> states = new BusinessDelegate().getStateAbbrvs();
+		List<com.revature.beans.StateAbbrv> states = bd.getStateAbbrvs();
 		req.getSession().setAttribute("states", states);
-		List<com.revature.beans.ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		List<com.revature.beans.ClientType> clientTypes = bd.getClientTypes();
 		req.getSession().setAttribute("clientTypes", clientTypes);
-		
 		req.setAttribute("address", new com.revature.beans.Address());
 		return "clist";
+	}
+	
+	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
+	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("invoice", new PurchaseOrder());
+		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		return "invoice";
 	}
 	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
@@ -61,6 +70,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		BusinessDelegate bd = new BusinessDelegate();
 		System.out.println("Button pressed");
 		req.setAttribute("success", null);
 		if(bindingResult.hasErrors()){
@@ -84,8 +95,49 @@ public class MainController implements ServletContextAware, InitializingBean{
 			}
 		}
 		product.setProductCategories(categories);
-		new BusinessDelegate().insert(product);
+		bd.insert(product);
 		req.setAttribute("success", "Product succesfully added.");
+		List<Product> products = bd.getProducts();
+		req.getSession().setAttribute("products", products);
+		return "plist";
+	}
+	
+	@RequestMapping(value="updateproduct.do", method=RequestMethod.POST)
+	public String updateProduct(
+			@ModelAttribute("product") @Valid Product product, 
+			BindingResult bindingResult,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		
+		BusinessDelegate bd = new BusinessDelegate();
+		System.out.println("Button pressed");
+		req.setAttribute("success", null);
+		if(bindingResult.hasErrors()){
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for(ObjectError e: errors){
+				System.out.println(e.getDefaultMessage());
+			}
+			List<Product> products = bd.getProducts();
+			req.getSession().setAttribute("products", products);
+			req.setAttribute("success", "Product not updated. Errors in input.");
+			return "plist";
+		}
+		String[] catNames = product.getCategoryNames();
+
+		Set<ProductCategory> categories = new HashSet<>();
+		List<ProductCategory> allCats = new ArrayList<ProductCategory>();
+		allCats = (List<ProductCategory>) req.getSession().getAttribute("categories");
+		List<String> catNamesList = new ArrayList<String>(Arrays.asList(catNames));
+		for(ProductCategory cat: allCats){
+			if(catNamesList.contains(cat.getCategoryDescription())) {
+				categories.add(cat);
+			}
+		}
+		product.setProductCategories(categories);
+		bd.update(product);
+		req.setAttribute("success", "Product succesfully updated.");
+		List<Product> products = bd.getProducts();
+		req.getSession().setAttribute("products", products);
 		return "plist";
 	}
 
@@ -96,27 +148,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		new BusinessDelegate().insert(client);
 		return "clist";
 	}
-	
-	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
-	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
-		req.setAttribute("invoice", new PurchaseOrder());
-		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
-		req.setAttribute("clientTypes", clientTypes);
-		return "invoice";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {}
