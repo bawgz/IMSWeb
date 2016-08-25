@@ -55,14 +55,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "clist";
 	}
 	
-	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
-	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
-		req.setAttribute("invoice", new PurchaseOrder());
-		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
-		req.setAttribute("clientTypes", clientTypes);
-		return "invoice";
-	}
-	
 	@RequestMapping(value="addproduct.do", method=RequestMethod.POST)
 	public String addProduct(
 			@ModelAttribute("product") @Valid Product product, 
@@ -105,7 +97,13 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "clist";
 	}
 	
-	
+	@RequestMapping(value="invoice.do", method=RequestMethod.GET)
+	public String invoice(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("invoice", new PurchaseOrder());
+		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		return "invoice";
+	}
 	
 	
 	
