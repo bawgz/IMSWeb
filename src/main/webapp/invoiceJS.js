@@ -55,8 +55,6 @@ function getProducts(client) {
 }
 
 function getProduct(product) {
-	alert("wtf")
 	$("#productSelection").html(product)
-	
 	$("#poLine").show()
 }
