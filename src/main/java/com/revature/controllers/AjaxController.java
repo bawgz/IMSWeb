@@ -64,4 +64,25 @@ public class AjaxController {
 		return json;
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value="getProductById.do")
+	@ResponseBody
+	public String getProductById(String str) {
+		System.out.println("get products by id: " + str);
+		int pid = Integer.parseInt(str);
+		Product product = new BusinessDelegate().getProductById(pid);
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String json = "";
+		try {
+			json = ow.writeValueAsString(product);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		System.out.println(product.getRetailPrice());
+		return json;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="addRow.do")
+	@ResponseBody
+	public void addRow() {}
+	
 }

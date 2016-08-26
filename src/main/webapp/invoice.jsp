@@ -15,9 +15,6 @@
 <!-- custom style sheet -->
 <link rel="stylesheet" href="main.css">
 </head>
-
-
-
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
@@ -34,28 +31,54 @@
   </c:forEach>
   </ul>
 </div>
-<div id="clientDropdown" class="dropdown" hidden>
+
+<div class="row">
+<div id="clientDropdown" class="dropdown col-xs-3" hidden>
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <span id="clientSelection">Client Name</span>
     <span class="caret"></span>
   </button>
   <ul id="clientNames" class="dropdown-menu" aria-labelledby="dropdownMenu1"/>
 </div>
+</div>
 
-<div id="firstPoLine">
-<div id="productDropdown" class="dropdown" hidden>
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+<table class="table">
+<thead>
+<td><span class="glyphicon glyphicon-plus" style="cursor: pointer;" onclick="addrow()"></span></td>
+<td>Price per item</td>
+<td>Quantity</td>
+<td>Total price</td>
+</thead>
+<tbody id="tbody">
+<tr>
+<td>
+<div id="productDropdown2" class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <span id="productSelection">Product</span>
     <span class="caret"></span>
   </button>
-  <ul id="productNames" class="dropdown-menu" aria-labelledby="dropdownMenu1"/>
+  <ul id="row0" class="dropdown-menu" aria-labelledby="dropdownMenu2"/>
+  <c:forEach var="product" items="${products}">
+  	<li onclick="getProduct(this.id)" id="${product.productUpc}">${product.productName}</li>
+  </c:forEach>
 </div>
-<div id="poLine" hidden>
-<input type="text"/>
+</td>
+<div id="poLine2">
+	<td><span id="pricePerItem0" ></span></td>
+	<td><input id="0" type="number" onchange="updateTotal(this.value, this.id)" value="1" /></td>
+	<td><span id="totalPrice0" ></span></td>
 </div>
-</div> <!-- closes poLine -->
+</tr>
+<tr id="finalRow"><td></td><td></td><td></td><td id='total'></td></tr>
+</tbody> <!-- closes tbody -->
+</table>
+</div> <!-- closes container -->
 
-</div>	<!-- closes container -->
+
+
+
+
+
 </body>
 <script src="invoiceJS.js"></script>
 </html>

@@ -61,6 +61,8 @@ public class MainController implements ServletContextAware, InitializingBean{
 		req.setAttribute("invoice", new PurchaseOrder());
 		List<ClientType> clientTypes = new BusinessDelegate().getClientTypes();
 		req.setAttribute("clientTypes", clientTypes);
+		List<Product> products = new BusinessDelegate().getProducts();
+		req.setAttribute("products", products);
 		return "invoice";
 	}
 	
