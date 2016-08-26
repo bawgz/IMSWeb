@@ -156,11 +156,32 @@ public class MainController implements ServletContextAware, InitializingBean{
 		return "clist";
 	}
 	
+	@RequestMapping(value="updateclient.do", method=RequestMethod.POST)
+	public String updateClient(@ModelAttribute("client") @Valid Client client,
+			BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
+		BusinessDelegate bd = new BusinessDelegate();
+		int clientId = client.getImsClientId();
+		System.out.println("Client id: " + clientId);
+		Client oldClient = bd.getClientObjectById(clientId);
+		Address oldAddress = oldClient.getAddress();
+		Address newAddress = client.getAddress();
+		newAddress.setImsAddressId(oldAddress.getImsAddressId());
+		if(client.getAddress().equals(oldAddress)){
+			bd.update(client);
+		} else {
+			bd.update(client.getAddress());
+			bd.update(client);			
+		}
+		List<Client> clients = bd.getClients();
+		req.setAttribute("clients", clients);
+		return "clist";
+	}
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {}
 	@Override
 	public void setServletContext(ServletContext ctxt) {
 		this.servletContext = ctxt;
-	}
+	}	
 	
 }

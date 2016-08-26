@@ -53,6 +53,7 @@ public class AjaxController {
 	@RequestMapping(method=RequestMethod.GET, value="getProducts.do")
 	@ResponseBody
 	public String getProducts() {
+		System.out.println("getting products");
 		List<Product> products = new BusinessDelegate().getProducts();
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		String json = "";
@@ -61,6 +62,7 @@ public class AjaxController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+		System.out.println("returning your json");
 		return json;
 	}
 	
@@ -68,6 +70,13 @@ public class AjaxController {
 	public void deleteProduct(int upc){
 		BusinessDelegate bd = new BusinessDelegate();
 		bd.deleteProductByUpc(upc);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="deleteclient.do")
+	public void deleteClient(int id){
+		System.out.println("Deleting client...");
+		BusinessDelegate bd = new BusinessDelegate();
+		bd.deleteClientById(id);
 	}
 	
 }

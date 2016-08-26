@@ -39,6 +39,7 @@
         	<tr class="rowHeader">
         		<th>UPC</th>
         		<th>Name</th>
+        		<th>Categories</th>
         		<th>Unit Cost</th>
         		<th>Retail Price</th>
         		<th>Amt In Stock</th>
@@ -57,6 +58,7 @@
     			<tr id="${p.productUpc}">
     				<td id="upc${p.productUpc}"><c:out value="${p.productUpc}"></c:out></td>       			
         			<td id="name${p.productUpc}"><c:out value="${p.productName}"></c:out></td>
+        			<td><c:out value="${p.categoriesString}"></c:out></td>
         			<td><fmt:formatNumber value="${p.unitCost}" type="currency" /></td>
         			<td><fmt:formatNumber value="${p.retailPrice}" type="currency" /></td>
         			<td id="squantity${p.productUpc}"><c:out value="${p.quantityOnHand}"></c:out></td>
@@ -213,7 +215,7 @@
 						<div class="row">
 							<div class="form-group col-xs-12">
 								<label for="cats">Categories: </label>
-								<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="updatecats" /> 
+								<form:checkboxes cssClass="checkbox-inline" items="${categories}" itemValue="categoryDescription" path="categoryNames" id="updatecats" /> 
 									<form:errors path="categoryNames" cssClass="error"/>  <br />
 							</div>
 						</div>

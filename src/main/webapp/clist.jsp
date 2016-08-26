@@ -42,29 +42,31 @@
       		<th hidden></th>
       		<th hidden></th>
       		<th hidden></th>
-      		<th hidden></th>        		
+      		<th hidden></th>   
+      		<th hidden></th>     		
     		</tr>
   	</thead>
   	<tbody>
   		<c:forEach var="c" items="${clients}">
-  			<tr>
+  			<tr id="remove${c.imsClientId}">
   				<td id="id${c.imsClientId}"><c:out value="${c.imsClientId}"></c:out></td>       			
       			<td id="name${c.imsClientId}"><c:out value="${c.clientName}"></c:out></td>
-      			<td id="type${c.imsClientId}"><c:out value="${c.clientType}"></c:out></td>
+      			<td><c:out value="${c.clientType}"></c:out></td>
       			<td id="contact${c.imsClientId}"><c:out value="${c.pointOfContactName}"></c:out></td>
       			<td id="email${c.imsClientId}"><c:out value="${c.clientEmail}"></c:out></td>
       			<td id="phone${c.imsClientId}"><c:out value="${c.clientPhone}"></c:out></td>
       			<td id="fax${c.imsClientId}"><c:out value="${c.clientFax}"></c:out></td>
       			<td id="address${c.imsClientId}"><c:out value="${c.address}"></c:out></td>
       			<td>
-      				<span data-toggle="modal" data-target="#updatemodal" id="${c.imsClientId}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+      				<span data-toggle="modal" data-target="#updateclientmodal" id="${c.imsClientId}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
       				<span id="${c.imsClientId}" onclick=remove(this.id) style="cursor: pointer;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
       			</td>
       			<td id="saddress1${c.imsClientId}" hidden><c:out value="${c.address.streetAddress1}"></c:out></td>
       			<td id="saddress2${c.imsClientId}" hidden><c:out value="${c.address.streetAddress2}"></c:out></td>
       			<td id="city${c.imsClientId}" hidden><c:out value="${c.address.addressCity}"></c:out></td>
-      			<td id="state${c.imsClientId}" hidden><c:out value="${c.address.stateAbbrv}"></c:out></td>
+      			<td id="state${c.imsClientId}" hidden><c:out value="${c.address.stateAbbrv.abbrvId}"></c:out></td>
       			<td id="zip${c.imsClientId}" hidden><c:out value="${c.address.addressZip}"></c:out></td>
+      			<td id="type${c.imsClientId}" hidden><c:out value="${c.clientType.clientTypeId}"></c:out></td>
       		</tr>
   		</c:forEach>
   	</tbody>
@@ -73,7 +75,7 @@
 
 
 
-    <button type="button" class="btn btn-default buttons" data-toggle="modal" data-target="#addclientmodal">+ New Client</button>
+    <button type="button" onclick=clear() class="btn btn-default buttons" data-toggle="modal" data-target="#addclientmodal">+ New Client</button>
     <!-- New product -->
     
     <div id="addclientmodal" class="modal fade">
@@ -152,6 +154,85 @@
 		     </div>
 	   	</div>
 	</div>
+	
+	
+	<div id="updateclientmodal" class="modal fade">
+	 	<div class="modal-dialog">
+	   		<div class="modal-content">
+	     		<div class="modal-header">
+	       			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	       			<h4 class="modal-title">Update Client</h4>
+	    		</div>
+	    		<form:form action="updateclient.do" method="post" modelAttribute="client">
+		    		<div class="modal-body">
+		    			<form:hidden path="imsClientId" id="updateid" />
+						<div class="row">
+							<div class="form-group col-xs-9">
+								<label for="updateclientName">Client: </label>
+								<form:input path="clientName" id="updateclientName" cssClass="form-control" /> <form:errors path="clientName" cssClass="error"/> <br /> <!-- path = bean property -->
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="updateclientType">Type:</label>
+								<form:select path="clientType.clientTypeId" items="${clientTypes}" itemValue="clientTypeId" itemLabel="clientType" id="updateclientType" cssClass="form-control"/> <form:errors path="clientType.clientTypeId" cssClass="error"/> <br /> <!-- path = bean property -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="updatecontact">Point of Contact:</label> 
+								<form:input path="pointOfContactName" id="updatecontact" cssClass="form-control" /> <form:errors path="pointOfContactName" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="updateemail">Email:</label> 
+								<form:input path="clientEmail" id="updateemail" cssClass="form-control" /> <form:errors path="clientEmail" cssClass="error"/> <br />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="updatephone">Phone:</label> 
+								<form:input path="clientPhone" id="updatephone" cssClass="form-control" /> <form:errors path="clientPhone" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="updatefax">Fax:</label> 
+								<form:input path="clientFax" id="updatefax" cssClass="form-control" /> <form:errors path="clientFax" cssClass="error"/> <br />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-xs-12">
+								<label for="updatestreet1">Street Address 1:</label> 
+								<form:input path="address.streetAddress1" id="updatestreet1" cssClass="form-control" /> <form:errors path="address.streetAddress1" cssClass="error"/> <br />
+							</div>
+						</div>
+		
+						<div class="row">
+							<div class="form-group col-xs-12">
+								<label for="updatestreet2">Street Address 2:</label> 
+								<form:input path="address.streetAddress2" id="updatestreet2" cssClass="form-control" /> <form:errors path="address.streetAddress2" cssClass="error"/> <br />
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="updatecity">City:</label> 
+								<form:input path="address.addressCity" id="updatecity" cssClass="form-control" /> <form:errors path="address.addressCity" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="updatestate">State:</label> 
+								<form:select path="address.stateAbbrv.abbrvId" items="${states}" itemValue="abbrvId" itemLabel="stateName" id="updatestate" cssClass="form-control"/> <form:errors path="address.stateAbbrv.abbrvId" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-3">
+								<label for="updatezip">Zip:</label> 
+								<form:input path="address.addressZip" id="updatezip" cssClass="form-control" /> <form:errors path="address.addressZip" cssClass="error"/> <br />
+							</div>
+						</div>
+		     		</div>
+		     		<div class="modal-footer">
+		       			<input class="btn btn-default buttons" type="submit" value="Update" />
+					</div>
+				</form:form>
+		     </div>
+	   	</div>
+	</div>
 
 
 </div>
@@ -161,5 +242,46 @@ $(document).ready(function() {
     $('#jqueryTable2').DataTable();
 	$("#jqueryTable2_info").hide();
 });
+
+function edit(id){
+	$("#updateid").val($("#id" + id).html());
+	$("#updateclientName").val($("#name" + id).html());
+	$("#updateclientType").val($("#type" + id).html());
+	$("#updatecontact").val($("#contact" + id).html());
+	$("#updateemail").val($("#email" + id).html());
+	$("#updatephone").val($("#phone" + id).html());
+	$("#updatefax").val($("#fax" + id).html());
+	$("#updatestreet1").val($("#saddress1" + id).html());
+	$("#updatestreet2").val($("#saddress2" + id).html());
+	$("#updatecity").val($("#city" + id).html());
+	$("#updatestate").val($("#state" + id).html());
+	$("#updatezip").val($("#zip" + id).html());
+}
+
+function remove(id){
+	$.ajax({
+			url: "deleteclient.do",
+			method: "POST",
+			data : { 'id'  : id},
+			success: function(){
+				
+			}
+	});
+	$("#remove"+ id).remove();
+}
+
+function clear(){
+	$("#clientName").val($("#name" + id).html());
+	$("#clientType").val($("#type" + id).html());
+	$("#contact").val($("#contact" + id).html());
+	$("#email").val($("#email" + id).html());
+	$("#phone").val($("#phone" + id).html());
+	$("#fax").val($("#fax" + id).html());
+	$("#street1").val($("#saddress1" + id).html());
+	$("#street2").val($("#saddress2" + id).html());
+	$("#city").val($("#city" + id).html());
+	$("#state").val($("#state" + id).html());
+	$("#zip").val($("#zip" + id).html());
+}
 </script>
 </html>
