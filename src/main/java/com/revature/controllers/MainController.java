@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 
+import com.revature.beans.Address;
 import com.revature.beans.Client;
 import com.revature.beans.ClientType;
 import com.revature.beans.Product;
 import com.revature.beans.ProductCategory;
 import com.revature.beans.PurchaseOrder;
+import com.revature.beans.StateAbbrv;
 import com.revature.hibernate.BusinessDelegate;
 
 @Controller
@@ -40,19 +42,21 @@ public class MainController implements ServletContextAware, InitializingBean{
 		List<ProductCategory> categories = new BusinessDelegate().getProductCategories();
 		req.getSession().setAttribute("categories", categories);
 		List<Product> products = new BusinessDelegate().getProducts();
-		req.getSession().setAttribute("products", products);
+		req.setAttribute("products", products);
 		return "plist";
 	}
 	
 	@RequestMapping(value="clist.do", method=RequestMethod.GET)
 	public String clist(HttpServletRequest req, HttpServletResponse resp) {
 		BusinessDelegate bd = new BusinessDelegate();
-		req.setAttribute("client", new com.revature.beans.Client());
-		List<com.revature.beans.StateAbbrv> states = bd.getStateAbbrvs();
+		req.setAttribute("client", new Client());
+		List<StateAbbrv> states = bd.getStateAbbrvs();
 		req.getSession().setAttribute("states", states);
-		List<com.revature.beans.ClientType> clientTypes = bd.getClientTypes();
+		List<ClientType> clientTypes = bd.getClientTypes();
 		req.getSession().setAttribute("clientTypes", clientTypes);
-		req.setAttribute("address", new com.revature.beans.Address());
+		req.setAttribute("address", new Address());
+		List<Client> clients = bd.getClients();
+		req.setAttribute("clients", clients);
 		return "clist";
 	}
 	
@@ -82,7 +86,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 				System.out.println(e.getDefaultMessage());
 			}
 			List<Product> products = new BusinessDelegate().getProducts();
-			req.getSession().setAttribute("products", products);
+			req.setAttribute("products", products);
 			return "plist";
 		}
 		String[] catNames = product.getCategoryNames();
@@ -100,7 +104,7 @@ public class MainController implements ServletContextAware, InitializingBean{
 		bd.insert(product);
 		req.setAttribute("success", "Product succesfully added.");
 		List<Product> products = bd.getProducts();
-		req.getSession().setAttribute("products", products);
+		req.setAttribute("products", products);
 		return "plist";
 	}
 	
@@ -144,10 +148,34 @@ public class MainController implements ServletContextAware, InitializingBean{
 	}
 
 	@RequestMapping(value="addclient.do", method=RequestMethod.POST)
-	public String addClient(@ModelAttribute("client") @Valid com.revature.beans.Client client,
+	public String addClient(@ModelAttribute("client") @Valid Client client,
 			BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
-		new BusinessDelegate().insert(client.getAddress());
-		new BusinessDelegate().insert(client);
+		BusinessDelegate bd = new BusinessDelegate();
+		bd.insert(client.getAddress());
+		bd.insert(client);
+		List<Client> clients = bd.getClients();
+		req.setAttribute("clients", clients);
+		return "clist";
+	}
+	
+	@RequestMapping(value="updateclient.do", method=RequestMethod.POST)
+	public String updateClient(@ModelAttribute("client") @Valid Client client,
+			BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp) {
+		BusinessDelegate bd = new BusinessDelegate();
+		int clientId = client.getImsClientId();
+		System.out.println("Client id: " + clientId);
+		Client oldClient = bd.getClientObjectById(clientId);
+		Address oldAddress = oldClient.getAddress();
+		Address newAddress = client.getAddress();
+		newAddress.setImsAddressId(oldAddress.getImsAddressId());
+		if(client.getAddress().equals(oldAddress)){
+			bd.update(client);
+		} else {
+			bd.update(client.getAddress());
+			bd.update(client);			
+		}
+		List<Client> clients = bd.getClients();
+		req.setAttribute("clients", clients);
 		return "clist";
 	}
 	
@@ -156,6 +184,6 @@ public class MainController implements ServletContextAware, InitializingBean{
 	@Override
 	public void setServletContext(ServletContext ctxt) {
 		this.servletContext = ctxt;
-	}
+	}	
 	
 }

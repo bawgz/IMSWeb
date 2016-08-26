@@ -42,3 +42,8 @@ th {
 	background: #3D542A !important;
 	color: #F0E14A !important; 
 }
+
+#chart, #stock{
+	width: 100%;
+	height: 400px;
+}

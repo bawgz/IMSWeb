@@ -85,4 +85,17 @@ public class AjaxController {
 	@ResponseBody
 	public void addRow() {}
 	
+	@RequestMapping(method=RequestMethod.POST, value="deleteproduct.do")
+	public void deleteProduct(int upc){
+		BusinessDelegate bd = new BusinessDelegate();
+		bd.deleteProductByUpc(upc);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="deleteclient.do")
+	public void deleteClient(int id){
+		System.out.println("Deleting client...");
+		BusinessDelegate bd = new BusinessDelegate();
+		bd.deleteClientById(id);
+	}
+	
 }

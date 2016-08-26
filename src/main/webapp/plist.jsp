@@ -39,10 +39,10 @@
         	<tr class="rowHeader">
         		<th>UPC</th>
         		<th>Name</th>
+        		<th>Categories</th>
         		<th>Unit Cost</th>
         		<th>Retail Price</th>
         		<th>Amt In Stock</th>
-        		<th>Threshold</th>
         		<th>Reorder Amt</th>
         		<th></th>
         		<th hidden></th>
@@ -55,13 +55,13 @@
     	</thead>
     	<tbody>
     		<c:forEach var="p" items="${products}">
-    			<tr>
+    			<tr id="${p.productUpc}">
     				<td id="upc${p.productUpc}"><c:out value="${p.productUpc}"></c:out></td>       			
         			<td id="name${p.productUpc}"><c:out value="${p.productName}"></c:out></td>
+        			<td><c:out value="${p.categoriesString}"></c:out></td>
         			<td><fmt:formatNumber value="${p.unitCost}" type="currency" /></td>
         			<td><fmt:formatNumber value="${p.retailPrice}" type="currency" /></td>
         			<td id="squantity${p.productUpc}"><c:out value="${p.quantityOnHand}"></c:out></td>
-        			<td id="threshold${p.productUpc}"><c:out value="${p.reorderThreshold}"></c:out></td>
         			<td id="rquantity${p.productUpc}"><c:out value="${p.reorderQuantity}"></c:out></td>
         			<td>
         				<span data-toggle="modal" data-target="#updatemodal" id="${p.productUpc}" onclick=edit(this.id) style="cursor: pointer;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -97,46 +97,41 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="short">Short Name: </label> 
 								<form:input cssClass="form-control" id="short" path="shortName" /> <form:errors path="shortName" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
-								<label for="weight">Weight: </label> 
-								<form:input cssClass="form-control" id="weight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
-							</div>
-							
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="ucost">Unit Cost: </label> 
 								<form:input cssClass="form-control" id="ucost" path="unitCost" /> <form:errors path="unitCost" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="rprice">Retail price: </label>
 								<form:input cssClass="form-control" id="rprice" path="retailPrice" /> <form:errors path="retailPrice" cssClass="error"/> <br />
 							</div>
 						</div>
 						
 						<div class="row">
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="pack">Pack size: </label> 
 								<form:input cssClass="form-control" id="pack" path="packSize" /> <form:errors path="packSize" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="stock">Stock amt: </label> 
 								<form:input cssClass="form-control" id="stock" path="quantityOnHand" /> <form:errors path="quantityOnHand" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
-								<label for="threshold">Threshold: </label>
-								<form:input cssClass="form-control" id="threshold" path="reorderThreshold" /> <form:errors path="reorderThreshold" cssClass="error"/> <br />
-							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="quantity">Reorder amt: </label> 
 								<form:input cssClass="form-control" id="quantity" path="reorderQuantity" /> <form:errors path="reorderQuantity" cssClass="error"/> <br />
 							</div>
 						</div>
 						
 						<div class="row">
-							<div class="form-group col-xs-12">
+							<div class="form-group col-xs-2">
+								<label for="weight">Weight: </label> 
+								<form:input cssClass="form-control" id="weight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-10">
 								<label for="desc">Description: </label> 
 								<form:input cssClass="form-control" id="desc" path="productDescription" /> <form:errors path="productDescription" cssClass="error"/> <br />
 							</div>
@@ -177,46 +172,41 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="short">Short Name: </label> 
 								<form:input cssClass="form-control" id="updateshort" path="shortName" /><form:errors path="shortName" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
-								<label for="weight">Weight: </label> 
-								<form:input cssClass="form-control" id="updateweight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
-							</div>
-							
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="ucost">Unit Cost: </label> 
 								<form:input cssClass="form-control" id="updateucost" path="unitCost" /> <form:errors path="unitCost" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="rprice">Retail price: </label>
 								<form:input cssClass="form-control" id="updaterprice" path="retailPrice" /> <form:errors path="retailPrice" cssClass="error"/> <br />
 							</div>
 						</div>
 						
 						<div class="row">
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="pack">Pack size: </label> 
 								<form:input cssClass="form-control" id="updatepack" path="packSize" /> <form:errors path="packSize" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="stock">Stock amt: </label> 
 								<form:input cssClass="form-control" id="updatestock" path="quantityOnHand" /> <form:errors path="quantityOnHand" cssClass="error"/> <br />
 							</div>
-							<div class="form-group col-xs-3">
-								<label for="threshold">Threshold: </label>
-								<form:input cssClass="form-control" id="updatethreshold" path="reorderThreshold" /> <form:errors path="reorderThreshold" cssClass="error"/> <br />
-							</div>
-							<div class="form-group col-xs-3">
+							<div class="form-group col-xs-4">
 								<label for="quantity">Reorder amt: </label> 
 								<form:input cssClass="form-control" id="updatequantity" path="reorderQuantity" /> <form:errors path="reorderQuantity" cssClass="error"/> <br />
 							</div>
 						</div>
 						
 						<div class="row">
-							<div class="form-group col-xs-12">
+							<div class="form-group col-xs-2">
+								<label for="weight">Weight: </label> 
+								<form:input cssClass="form-control" id="updateweight" path="productWeight" /> <form:errors path="productWeight" cssClass="error"/> <br />
+							</div>
+							<div class="form-group col-xs-10">
 								<label for="desc">Description: </label> 
 								<form:input cssClass="form-control" id="updatedesc" path="productDescription"></form:input> <form:errors path="productDescription" cssClass="error"/> <br />
 							</div>
@@ -225,7 +215,7 @@
 						<div class="row">
 							<div class="form-group col-xs-12">
 								<label for="cats">Categories: </label>
-								<form:checkboxes cssClass="checkbox-inline" items="${categories}" path="categoryNames" id="updatecats" /> 
+								<form:checkboxes cssClass="checkbox-inline" items="${categories}" itemValue="categoryDescription" path="categoryNames" id="updatecats" /> 
 									<form:errors path="categoryNames" cssClass="error"/>  <br />
 							</div>
 						</div>
@@ -251,11 +241,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#jqueryTable').DataTable();
-} );
-
-
-$('.modal').on('hidden.bs.modal', function(){
-    $(this).find('form:form')[0].reset();
+	$("#jqueryTable_info").hide();
 });
 
 function edit(upc){
@@ -266,10 +252,22 @@ function edit(upc){
 	$("#updaterprice").val($("#rprice" + upc).html());
 	$("#updatepack").val($("#pack" + upc).html());
 	$("#updatestock").val($("#squantity" + upc).html());
-	$("#updatethreshold").val($("#threshold" + upc).html());
 	$("#updatequantity").val($("#rquantity" + upc).html());
 	$("#updatedesc").val($("#desc" + upc).html());
 	$("#updateupc").val($("#upc" + upc).html());
 }
+
+function remove(upc){
+	$.ajax({
+			url: "deleteproduct.do",
+			method: "POST",
+			data : { 'upc'  : upc},
+			success: function(success){
+				
+			}
+	});
+	$("#"+ upc).remove();
+}
+
 </script>
 </html>
